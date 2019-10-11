@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "697798049233",
+    "firebase_url": "https://drug-addicts-counseling-system.firebaseio.com",
+    "project_id": "drug-addicts-counseling-system",
+    "storage_bucket": "drug-addicts-counseling-system.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:697798049233:android:19ce91f31f4ad83c3434f0",
+        "android_client_info": {
+          "package_name": "com.example.drugaddictscounselingsystem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "697798049233-ua8oh9ltc72likn4rk45kpvaj771d38k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.drugaddictscounselingsystem",
+            "certificate_hash": "daf8dadac7e633cf797af1bf4355cce91da37a8a"
+          }
+        },
+        {
+          "client_id": "697798049233-m7uv44gc0fc60nc1pl51s3cs4h0ff3jr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLLrqsSQBQ6TrEmUKIoaW-eghvx9kaYQ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "697798049233-m7uv44gc0fc60nc1pl51s3cs4h0ff3jr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
