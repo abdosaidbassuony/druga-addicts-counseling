@@ -18,5 +18,13 @@
     <string name="action_register">Register</string>
     <string name="forget_password_txt">Please enter your registered E-mail for password rest instruction</string>
     <string name="reset_password">Reset Password</string>
+    <string name="goto_Login">If you already have account goto login</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="nav_profile">Profile</string>
+    <string name="nav_chat">Chat</string>
+    <string name="nav_hom">Home</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
