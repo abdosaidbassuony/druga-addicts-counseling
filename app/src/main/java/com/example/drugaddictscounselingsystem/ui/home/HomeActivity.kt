@@ -23,9 +23,10 @@ class HomeActivity : AppCompatActivity() {
         //setting toolbar
         setSupportActionBar(findViewById(R.id.toolbar))
         //home navigation
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
         supportFragmentManager.beginTransaction().replace(R.id.container, HomeFragment()).commit()
         bottomNavigationView?.setOnNavigationItemSelectedListener(onBottomNavigationView)
+
 
     }
 
@@ -33,19 +34,23 @@ class HomeActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.nav_home -> {
                 toolbar?.title = "Home"
+
                 val homeFragment = HomeFragment.newInstance()
+
                 openFragment(homeFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_chat -> {
                 toolbar?.title = "Chat"
                 val chatFragment = ChatFragment.newInstance()
+
                 openFragment(chatFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_profile -> {
                 toolbar?.title = "Profile"
                 val profilFragment = ProfileFragment.newInstance()
+
                 openFragment(profilFragment)
                 return@OnNavigationItemSelectedListener true
             }

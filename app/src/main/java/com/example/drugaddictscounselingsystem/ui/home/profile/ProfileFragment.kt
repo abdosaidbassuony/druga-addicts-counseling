@@ -12,6 +12,7 @@ import com.example.drugaddictscounselingsystem.R
 import com.example.drugaddictscounselingsystem.data.firebase.FireBaseSource
 import com.example.drugaddictscounselingsystem.data.repositories.UserRepsitory
 import com.example.drugaddictscounselingsystem.databinding.FragmentProfileBinding
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 /**
@@ -24,32 +25,35 @@ class ProfileFragment : Fragment() {
     private val factory = ProfileViewModelFactory(repsitory)
     private lateinit var viewModel: ProfileViewModel
 
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val binding: FragmentProfileBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
         viewModel = ViewModelProviders.of(this, factory).get(ProfileViewModel::class.java)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
-        // Inflate the layout for this fragment
         return binding.root
 
+
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val text = name_in_user_profile
+        val image = image_profile
+        viewModel.fetchCurrentUser(text, image)
 
-        name_in_user_profile.text = viewModel.name
-        print(viewModel.name)
+
+        val target = image_profile
+        Picasso.get().load(ProfileViewModel.user?.photoUri).error(R.drawable.ic_user).into(target)
     }
+
 
     companion object {
         fun newInstance(): ProfileFragment = ProfileFragment()
     }
 
-    override fun onStart() {
-        super.onStart()
-        viewModel.readFrmData()
-    }
-
 
 }
+
+

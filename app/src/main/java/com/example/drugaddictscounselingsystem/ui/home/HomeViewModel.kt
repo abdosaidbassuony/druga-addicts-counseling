@@ -3,9 +3,15 @@ package com.example.drugaddictscounselingsystem.ui.home
 import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModel
+import com.example.drugaddictscounselingsystem.data.model.Post
 import com.example.drugaddictscounselingsystem.data.repositories.UserRepsitory
-import com.example.drugaddictscounselingsystem.utils.startLoginActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieViewHolder
 
 
 class HomeViewModel(
@@ -14,54 +20,59 @@ class HomeViewModel(
     lateinit var view: View
     val toolbar: Toolbar? = null
     val bottomNavigationView: BottomNavigationView? = null
+    var postText: String? = null
+    val adapter = GroupAdapter<GroupieViewHolder>()
+    val readPostsHashMap = HashMap<String, Post>()
+
+
 
 
     val user by lazy {
         repository.currentUser()
     }
+    val uid = user?.uid
 
-    fun logout() {
-        repository.logOut()
-        view.context.startLoginActivity()
+    fun writePost() {
+
+        val ref = FirebaseDatabase.getInstance().getReference("POSTS").child(uid!!).push()
+        val post = Post(ref.key.toString(), uid, postText!!)
+        ref.setValue(post)
     }
 
-    /* @BindingAdapter("app:onItemSelected" )
-        fun onItemSelected() {
+    fun readPosts() {
+        val ref = FirebaseDatabase.getInstance().getReference("POSTS").child(uid!!)
+        ref.addChildEventListener(object : ChildEventListener {
+            override fun onCancelled(p0: DatabaseError) {
 
-         val onBottomNavigationView= BottomNavigationView.OnNavigationItemSelectedListener {item ->
-              when(item.itemId){
-                  R.id.nav_home ->{
-                      toolbar?.title = "Home"
-                      val homeFragment = HomeFragment.newInstance()
-                      openFragment(homeFragment)
-                      return@OnNavigationItemSelectedListener true
-                  }
-                  R.id.nav_chat ->{
-                      toolbar?.title = "Chat"
-                      val chatFragment = ChatFragment.newInstance()
-                      openFragment(chatFragment)
-                      return@OnNavigationItemSelectedListener true
-                  }
-                  R.id.nav_profile ->{
-                      toolbar?.title = "Profile"
-                      val profilFragment = ProfileFragment.newInstance()
-                      openFragment(profilFragment)
-                      return@OnNavigationItemSelectedListener true
-                  }
+            }
 
-              }
-              false
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+            }
 
-          }
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                val post = p0.getValue(Post::class.java) ?: return
+                readPostsHashMap[p0.key!!] = post
+                refreshRecyclerView()
+            }
 
-          bottomNavigationView?.setOnNavigationItemSelectedListener(onBottomNavigationView)
+            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                val post = p0.getValue(Post::class.java) ?: return
+                readPostsHashMap[p0.key!!] = post
+                refreshRecyclerView()
+            }
 
-      }
-       private fun openFragment(fragment: Fragment) {
-          val fragmentActivity =FragmentActivity()
-          val transaction = fragmentActivity.supportFragmentManager.beginTransaction()
-          transaction.replace(R.id.container, fragment)
-          transaction.addToBackStack(null)
-          transaction.commit()
-      }*/
+            override fun onChildRemoved(p0: DataSnapshot) {
+            }
+
+        })
+    }
+
+    private fun refreshRecyclerView() {
+        adapter.clear()
+        readPostsHashMap.values.forEach {
+            adapter.add(PostItem(it))
+        }
+    }
+
+
 }

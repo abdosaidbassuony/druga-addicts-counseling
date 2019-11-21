@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.drugaddictscounselingsystem">
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,7 +11,36 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.home.HomeActivity" />
+        <activity
+            android:name=".ui.home.AddNewPostActivity"
+            android:label="@string/create_post"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.drugaddictscounselingsystem.ui.home.AddNewPostActivity" />
+        </activity>
+        <activity
+            android:name=".ui.home.chat.ChatLogActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.drugaddictscounselingsystem.ui.home.chat.NewMessageActivity" />
+        </activity>
+        <activity
+            android:name=".ui.home.chat.NewMessageActivity"
+            android:label="@string/new_message"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.drugaddictscounselingsystem.ui.home.chat.NewMessageActivity" />
+        </activity>
+        <activity android:name=".ui.home.HomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".activities.ui.auth.ForgetPasswordActivity" />
         <activity
             android:name=".activities.ui.auth.SignupActivity"
@@ -26,7 +54,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

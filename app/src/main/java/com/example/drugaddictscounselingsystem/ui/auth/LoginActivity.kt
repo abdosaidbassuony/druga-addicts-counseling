@@ -46,11 +46,6 @@ class LoginActivity : AppCompatActivity(), AuthListener {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onStart() {
-        super.onStart()
-        viewModel.user?.let {
-            startHomeActivity()
-        }
-    }
+
 }
 

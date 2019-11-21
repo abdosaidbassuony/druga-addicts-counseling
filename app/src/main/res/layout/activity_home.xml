@@ -26,6 +26,7 @@
             android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:titleTextColor="@color/white"
             tools:ignore="MissingConstraints" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView

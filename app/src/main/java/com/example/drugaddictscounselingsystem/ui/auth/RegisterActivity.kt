@@ -1,7 +1,9 @@
 package com.example.drugaddictscounselingsystem.activities.ui.auth
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -11,8 +13,8 @@ import com.example.drugaddictscounselingsystem.data.firebase.FireBaseSource
 import com.example.drugaddictscounselingsystem.data.repositories.UserRepsitory
 import com.example.drugaddictscounselingsystem.databinding.ActivityRegisterBinding
 import com.example.drugaddictscounselingsystem.ui.auth.AuthViewModelFactory
-import com.example.drugaddictscounselingsystem.ui.home.HomeActivity
 import com.example.drugaddictscounselingsystem.utils.startHomeActivity
+import kotlinx.android.synthetic.main.activity_register.*
 
 class SignupActivity : AppCompatActivity(), AuthListener {
     private val firebase = FireBaseSource()
@@ -33,21 +35,37 @@ class SignupActivity : AppCompatActivity(), AuthListener {
         binding.viewModel = viewModel
 
         viewModel.authlistener = this
+
+        add_image_profile.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            startActivityForResult(intent, 0)
+        }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
+            viewModel.photoUri = data.data
+            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, viewModel.photoUri)
+            image_profile.setImageBitmap(bitmap)
+
+
+        }
+    }
+
+
 
     override fun onStarted() {
         // progressbar.visibility = View.VISIBLE
-        Intent(this, HomeActivity::class.java).also {
-            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(it)
-        }
+
     }
 
     override fun onSuccess() {
         //   progressbar.visibility = View.GONE
 
         startHomeActivity()
-        viewModel.writeTodataBase()
+
 
     }
 
@@ -55,4 +73,5 @@ class SignupActivity : AppCompatActivity(), AuthListener {
         //  progressbar.visibility = View.GONE
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
+
 }

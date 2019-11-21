@@ -23,8 +23,15 @@
     <string name="nav_profile">Profile</string>
     <string name="nav_chat">Chat</string>
     <string name="nav_hom">Home</string>
+    <string name="new_message">New Message</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="name_of_user">User Name</string>
+    <string name="enter_message">Enter Message</string>
+    <string name="send">Send</string>
+    <string name="lstest_message">message</string>
+    <string name="what_is_in_you_mind">what is in your mind?</string>
+    <string name="create_post">Create Post</string>
+    <string name="post">POST</string>
 </resources>

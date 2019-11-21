@@ -3,10 +3,14 @@ package com.example.drugaddictscounselingsystem.ui.home.profile
 import android.content.ContentValues
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.lifecycle.ViewModel
+import com.example.drugaddictscounselingsystem.data.model.User
 import com.example.drugaddictscounselingsystem.data.repositories.UserRepsitory
 import com.example.drugaddictscounselingsystem.utils.startLoginActivity
 import com.google.firebase.database.*
+import com.squareup.picasso.Picasso
 
 
 class ProfileViewModel(
@@ -15,10 +19,16 @@ class ProfileViewModel(
     lateinit var view: View
 
     var name: String? = null
-    val user by lazy {
+    var uri: String? = null
+    val currentUser by lazy {
         repsitory.currentUser()
     }
-    private val database: DatabaseReference = FirebaseDatabase.getInstance().getReference().child("USERS").child(user!!.uid)
+
+    companion object {
+        var user: User? = null
+    }
+
+    private val database: DatabaseReference = FirebaseDatabase.getInstance().getReference("USER")
 
 
     fun logout(view: View) {
@@ -29,12 +39,15 @@ class ProfileViewModel(
     fun readFrmData() {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                // Get Post object and use the values to update the UI
-                val map = dataSnapshot.value as Map<String, Any>
-                // ...
-                name = map.getValue("name").toString()
+                dataSnapshot.children.forEach {
+                    Log.d("from read data ", it.toString())
+                    val user = it.getValue(User::class.java)
 
-                Log.d("abdo", name!!)
+                    Log.d("show data", user.toString())
+
+                }
+
+
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -47,6 +60,34 @@ class ProfileViewModel(
         database.addListenerForSingleValueEvent(postListener)
 
     }
+
+    fun fetchCurrentUser(textView: TextView, imageView: ImageView) {
+        val uid = currentUser?.uid
+        val ref = FirebaseDatabase.getInstance().getReference("USER").child(uid!!)
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                Log.w(ContentValues.TAG, "loadPost:onCancelled", p0.toException())
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                user = p0.getValue(User::class.java)
+                textView.text = user?.name
+                Picasso.get().load(user?.photoUri).into(imageView)
+
+            }
+
+        })
+    }
+
+
+
+
+
+
+
+
+
+
 
 
 }
