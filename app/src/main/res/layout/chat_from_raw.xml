@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/message_txt_from_chat_from_row"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rounded_editetxt"
+        android:maxWidth="240dp"
+        android:padding="16dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/user_image_chat_to_rw"
+        app:layout_constraintEnd_toStartOf="@+id/user_image_chat_from_rw"
+        app:layout_constraintTop_toTopOf="@+id/user_image_chat_from_rw" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/user_image_chat_from_rw"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/ic_user"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
